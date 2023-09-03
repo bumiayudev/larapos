@@ -9,8 +9,8 @@ class Barang extends Model
     protected $table = 'barang';
     protected $primaryKey = 'kd_brg';
     protected $keyType = 'string';
-    protected $incrementing = false;
-    protected $timestamps = false;
+    public $incrementing = false;
+    public $timestamps = false;
 
     protected $fillable = ['kd_brg', 'nm_brg', 'hrg_beli', 'hrg_jual', 'jml_brg', 'satuan'];
 }

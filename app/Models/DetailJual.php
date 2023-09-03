@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class DetailJual extends Model
 {
    protected $table = 'detail_jual';
-   protected $incrementing = false;
-   protected $timestamps = false;
+   public $incrementing = false;
+   public $timestamps = false;
 
    protected $fillable = [
         'faktur',

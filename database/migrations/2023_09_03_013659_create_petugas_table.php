@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('petugas', function (Blueprint $table) {
             $table->string('kd_ptg', 8)->primary();
             $table->string('nm_ptg', 50);
-            $table->string('pass', 12);
+            $table->string('email')->unique('petugas_email_unique');
+            $table->string('password', 100);
             $table->string('status', 20)->default('Admin');
         });
     }

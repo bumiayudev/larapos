@@ -9,8 +9,8 @@ class Penjualan extends Model
     protected $table = 'penjualan';
     protected $primaryKey = 'faktur';
     protected $keyType = 'string';
-    protected $timestamps = false;
-    protected $incrementing = false;
+    public $timestamps = false;
+    public $incrementing = false;
 
     protected $fillable = [
         'faktur',

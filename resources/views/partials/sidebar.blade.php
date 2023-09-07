@@ -21,21 +21,20 @@
                         <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                     </div>
                     <div class="ms-3">
-                        <h6 class="mb-0">Jhon Doe</h6>
-                        <span>Admin</span>
+                        <h6 class="mb-0">{{ strtoupper($user['nm_ptg']) }}</h6>
+                        <span>{{ $user['status'] }}</span>
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
                     <a href="{{ url('/') }}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Pages</a>
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>File</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="#" class="dropdown-item">Sign In</a>
-                            <a href="#" class="dropdown-item">Sign Up</a>
-                            <a href="#" class="dropdown-item">404 Error</a>
-                            <a href="#" class="dropdown-item">Blank Page</a>
+                            <a href="#" class="dropdown-item">Petugas</a>
+                            <a href="#" class="dropdown-item">Barang</a>
                         </div>
                     </div>
+                    <a href="{{ url('/') }}" class="nav-item nav-link"><i class="fas fa-cash-register"></i> Transaksi</a>
                 </div>
             </nav>
         </div>

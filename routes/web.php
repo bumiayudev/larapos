@@ -14,8 +14,11 @@ use App\Http\Controllers\UserController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::middleware(['auth.user'])->group(function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('auth.user');
+});
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/signin', [UserController::class, 'signin']);
-Route::get('/signup', [UserController::class, 'signup']);
+Route::get('/signin', [UserController::class, 'signin'])->name('signin');
 Route::post('/signin', [UserController::class, 'authenticate'])->name('signin');
+Route::get('/signup', [UserController::class, 'signup']);
+Route::get('/logout', [UserController::class, 'logout'])->name('logout');

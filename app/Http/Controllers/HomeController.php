@@ -8,7 +8,10 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
-        $data = array();
+        $user = $request->session()->get('user');
+        $data = array(
+            'user' => $user
+        );
         return view('pages.dashboard.index', $data);
     }
 }

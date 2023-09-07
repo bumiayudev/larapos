@@ -26,15 +26,16 @@
                 @error('password')
                     <div class="alert alert-danger mb-2">{{ $message }}</div>
                 @enderror
-                <div class="d-flex align-items-center justify-content-between mb-4">
+                <!-- <div class="d-flex align-items-center justify-content-between mb-4">
                     <div class="form-check">
                         <input type="checkbox" class="form-check-input" id="exampleCheck1">
                         <label class="form-check-label" for="exampleCheck1">Check me out</label>
                     </div>
                     <a href="">Forgot Password</a>
-                </div>
-                <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Sign In</button>
-                <p class="text-center mb-0">Don't have an Account? <a href="{{url('/signup')}}">Sign Up</a></p>
+                </div> -->
+                <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Login</button>
+                <p class="text-center mb-0">Don't have an Account? <a href="{{url('/signin
+                    ')}}">Sign Up</a></p>
 
             </form>
         </div>

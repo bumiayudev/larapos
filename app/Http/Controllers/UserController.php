@@ -7,11 +7,16 @@ use Illuminate\Http\RedirectResponse;
 use App\Models\Petugas;
 use App\Http\Requests\PetugasLoginRequest as LoginRequest;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
     public function signin()
     {
+        if(Session::get('user') !== null){
+            return redirect()->route('home');
+        }
+
         $data = array();
 
         return view('pages.auth.signin', $data);
@@ -35,8 +40,16 @@ class UserController extends Controller
             ])->onlyInput('email');
             
         } 
-        $request->session()->regenerate();
+        
+        Session::put('user', $row);
             
         return redirect()->intended('/');
+    }
+
+    public function logout()
+    {
+        Session::pull('user', null);
+
+        return redirect()->route('signin');
     }
 }

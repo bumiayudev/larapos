@@ -15,7 +15,10 @@ use App\Http\Controllers\UserController;
 |
 */
 Route::middleware(['auth.user'])->group(function () {
-    Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('auth.user');
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/users', [UserController::class, 'list'])->name('users');
+    Route::get('/user/create', [UserController::class, 'create'])->name('users.create');
+    Route::get('/users/edit/{id}', [UserController::class, 'edit']);
 });
 
 Route::get('/signin', [UserController::class, 'signin'])->name('signin');

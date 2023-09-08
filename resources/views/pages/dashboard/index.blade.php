@@ -1,9 +1,9 @@
 @extends('layouts.default')
 
 @section('content')
-    <h6 class="mt-2 mb-2">Welcome to Dashboard , {{ strtoupper($user['nm_ptg']) }}. </h6 class="mt-2 mb-2">
     <!-- Sale & Revenue Start -->
     <div class="container-fluid pt-4 px-4">
+        <h6 class="mt-2 mb-2">Welcome to Dashboard , {{ strtoupper($user['nm_ptg']) }}. </h6 class="mt-2 mb-2">
         <div class="row g-4">
             <div class="col-sm-6 col-xl-3">
                 <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">

@@ -202,6 +202,17 @@
         }
     });
 
+    $('#tbUser').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('users.json') }}",
+        columns: [
+            {data: 'kd_ptg', name:'kd_ptg'},
+            {data: 'nm_ptg', name:'nm_ptg'},
+            {data: 'email', name: 'email'},
+            {data:'action' , name: 'action'}
+        ]
+    });
     
 })(jQuery);
 

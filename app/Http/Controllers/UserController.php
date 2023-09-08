@@ -2,15 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use App\Models\Petugas;
 use App\Http\Requests\PetugasLoginRequest as LoginRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Routing\UrlGenerator;
 
 class UserController extends Controller
 {
+    protected $url;
+
+    public function __construct(UrlGenerator $url)
+    {
+        $this->url = $url;
+    }
+
     public function signin()
     {
         if(Session::get('user') !== null){
@@ -52,4 +61,36 @@ class UserController extends Controller
 
         return redirect()->route('signin');
     }
+
+    public function list(Request $request)
+    {
+        $data = array(
+            'user'=> Session::get('user')
+        );
+
+        if($request->ajax()) {
+            $model = Petugas::query();
+
+            return DataTables::eloquent($model)
+            ->addColumn('action', function(Petugas $ptg) {
+                return '<a href="'.$this->url->to('/users/edit/'.$ptg->kd_ptg).'" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</a> | <a href="'.$this->url->to('/users/delete/'.$ptg->kd_ptg).'" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Hapus</a>';
+            })
+            ->toJson();
+        }
+
+        return view('pages.users.list', $data);
+    }
+
+    public function create(){
+        $data = array(
+            'user' => Session::get('user')
+        );
+
+        return view('pages.users.create', $data);
+    }
+
+    public function edit($id = 1){
+        return 'Say hello';
+    }
+
 }

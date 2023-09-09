@@ -19,6 +19,7 @@ Route::middleware(['auth.user'])->group(function () {
     Route::get('/users', [UserController::class, 'list'])->name('users');
     Route::get('/user/create', [UserController::class, 'create'])->name('users.create');
     Route::get('/users/edit/{id}', [UserController::class, 'edit']);
+    Route::post('/users/store', [UserController::class, 'store'])->name('users.store');
 });
 
 Route::get('/signin', [UserController::class, 'signin'])->name('signin');

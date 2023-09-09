@@ -30,8 +30,8 @@
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>File</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="{{ route('users') }}" class="dropdown-item">Petugas</a>
-                            <a href="#" class="dropdown-item">Barang</a>
+                            <a href="{{ route('users') }}" class="dropdown-item"><i class="fas fa-user"></i> Pengguna</a>
+                            <a href="#" class="dropdown-item"><i class="fas fa-cubes"></i> Barang</a>
                         </div>
                     </div>
                     <a href="{{ url('/') }}" class="nav-item nav-link"><i class="fas fa-cash-register"></i> Transaksi</a>

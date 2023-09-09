@@ -89,6 +89,44 @@ class UserController extends Controller
         return view('pages.users.create', $data);
     }
 
+    public function store(Request $request){
+        $rules = [
+            'kd_ptg' => ['required','max:8'],
+            'nm_ptg' => ['required'],
+            'email' => ['required', 'email'],
+            'pass' => ['required', 'min:6']
+        ];
+
+        $messages = [
+            'kd_ptg.required' => 'Kode pengguna  tidak boleh kosong',
+            'kd_ptg.max' => 'Kode pengguna maksimal isinya 8 digit',
+            'nm_ptg.required' => 'Nama pengguna tidak boleh kosong',
+            'email.required' => 'Email tidak boleh kosong',
+            'email.email' => 'Email tidak sesuai',
+            'pass.required' => 'Password tidak boleh kosong',
+            'pass.min' => 'Minimal panjang panjang password 6 karakter'
+        ];
+
+        $request->validate($rules, $messages);
+
+        $user = Petugas::where('kd_ptg', $request->kd_ptg)->first();
+
+        if($user) {
+            return back()->with('error', 'Data pengguna sudah ada');
+        }
+
+        $data = new Petugas();
+        $data->kd_ptg = $request->kd_ptg;
+        $data->nm_ptg = $request->nm_ptg;
+        $data->email = $request->email;
+        $data->password = Hash::make($request->pass);
+        $data->status = "Kasir";
+        $data->save();
+
+        return back()->with('message', 'Data pengguna berhasil ditambahkan.');
+        
+    }
+
     public function edit($id = 1){
         return 'Say hello';
     }

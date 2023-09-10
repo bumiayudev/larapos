@@ -22,4 +22,7 @@
 <!-- Footer End -->
 </div>
 <!-- Content End -->
+
+@stack('prepend-script')
 @include('partials.footer')
+@stack('addon-script')

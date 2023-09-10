@@ -29,4 +29,8 @@
 
     <!-- Template Stylesheet -->
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
+
+    <!-- Datatables -->
+    <link href="https://cdn.datatables.net/v/bs4-4.6.0/dt-1.13.6/datatables.min.css" rel="stylesheet">
+ 
 </head>

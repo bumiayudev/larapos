@@ -12,9 +12,12 @@
 <script src="{{asset('lib/tempusdominus/js/moment.min.js')}}"></script>
 <script src="{{asset('lib/tempusdominus/js/moment-timezone.min.js')}}"></script>
 <script src="{{asset('lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js')}}"></script>
+<!-- Datatables -->
+<script src="https://cdn.datatables.net/v/bs4-4.6.0/dt-1.13.6/datatables.min.js"></script>
 
 <!-- Template Javascript -->
 <script src="{{asset('js/main.js')}}"></script>
+
 </body>
 
 </html>

@@ -73,7 +73,7 @@ class UserController extends Controller
 
             return DataTables::eloquent($model)
             ->addColumn('action', function(Petugas $ptg) {
-                return '<a href="'.$this->url->to('/users/edit/'.$ptg->kd_ptg).'" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</a> | <a href="'.$this->url->to('/users/delete/'.$ptg->kd_ptg).'" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Hapus</a>';
+                return '<a href="'.$this->url->to('/users/edit/'.$ptg->kd_ptg).'" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Edit</a> | <a href="'.$this->url->to('/users/delete/'.$ptg->kd_ptg).'" class="btn btn-sm btn-danger" onclick="return confirm(\'Yakin ingin dihapus?\')"><i class="fas fa-trash"></i> Hapus</a>';
             })
             ->toJson();
         }
@@ -127,8 +127,62 @@ class UserController extends Controller
         
     }
 
-    public function edit($id = 1){
-        return 'Say hello';
+    public function edit($id){
+        $user = Petugas::where('kd_ptg', $id)->first();
+
+        $data = array(
+            'id' => $user->kd_ptg,
+            'kd_ptg'=> $user->kd_ptg,
+            'nm_ptg' => $user->nm_ptg,
+            'email' => $user->email,
+            'user' => Session::get('user')
+        );
+
+        return view('pages.users.edit', $data);
+
+
+    }
+
+    public function update(Request $request){
+
+        $rules = [
+            'kd_ptg' => ['required'],
+            'nm_ptg' => ['required'],
+            'email' => ['required', 'email'],
+            'pass' => ['required']
+        ];
+
+        $messages = [
+            'kd_ptg.required' => 'Kode pengguna tidak boleh kosong',
+            'nm_ptg.required' => 'Nama pengguna tidak boleh kosong',
+            'email.required' => 'Email tidak boleh kosong',
+            'email.email' => 'Email tidak sesuai',
+            'pass.required' => 'Password tidak boleh kosong'
+        ];
+
+        $request->validate($rules, $messages);
+
+        $user = Petugas::where('kd_ptg', $request->id)->first();
+        $user->kd_ptg = $request->kd_ptg;
+        $user->nm_ptg = $request->nm_ptg;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->pass);
+        $user->save();
+
+        return back()->with('message', 'Data pengguna berhasil diubah');
+
+    }
+
+    public function delete($id) {
+        $user = Petugas::where('kd_ptg', $id)->first();
+
+        if($user) {
+            Petugas::destroy($id);
+
+            return back()->with('message', 'Data pengguna '.$user->nm_ptg.' berhasil dihapus');
+        } else {
+            return back()->with('error', 'Data pengguna tidak ditemukan.');
+        }
     }
 
 }

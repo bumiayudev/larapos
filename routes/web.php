@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -22,6 +23,11 @@ Route::middleware(['auth.user'])->group(function () {
     Route::post('/users/store', [UserController::class, 'store'])->name('users.store');
     Route::post('/users/update', [UserController::class, 'update'])->name('users.update');
     Route::get('/users/delete/{id}', [UserController::class, 'delete']);
+    Route::get('/items', [ItemController::class, 'index'])->name('items');
+    Route::get('/items/create', [ItemController::class, 'create'])->name('items.create');
+    Route::get('/items/edit/{id}', [UserController::class, 'edit']);
+    Route::post('/items/store', [ItemController::class, 'store'])->name('items.store');
+    Route::post('/items/update', [ItemController::class, 'update'])->name('items.update');
 });
 
 Route::get('/signin', [UserController::class, 'signin'])->name('signin');

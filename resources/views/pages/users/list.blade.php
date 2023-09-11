@@ -40,6 +40,9 @@
                 {data:'action' , name: 'action'}
             ]
         });
+        $('.btn-close').on('click', function() {
+            $('.toast').toast('hide');
+        });
      });
 </script>
     

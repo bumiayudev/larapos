@@ -27,7 +27,7 @@ class ItemController extends Controller
 
             return DataTables::eloquent($model)
             ->addColumn('action', function(Barang $item) {
-                return '<a class="btn btn-sm btn-warning" href="'.$this->url->to('/items/edit/'.$item->kd_brg).'"><i class="fas fa-edit"></i> Edit</a> | <a class="btn btn-sm btn-danger" href="'.$this->url->to('/items/delete/'.$item->kd_brg).'"><i class="fas fa-trash"></i> Hapus</a>';
+                return '<a class="btn btn-sm btn-warning" href="'.$this->url->to('/items/edit/'.$item->kd_brg).'"><i class="fas fa-edit"></i> Edit</a> | <a class="btn btn-sm btn-danger" href="'.$this->url->to('/items/delete/'.$item->kd_brg).'" onclick="return confirm(\'Yakin ingin dihapus?\')"><i class="fas fa-trash"></i> Hapus</a>';
             })
             ->toJson();
         }
@@ -81,8 +81,38 @@ class ItemController extends Controller
         }
     }
 
-    public function update() {
+    public function update(Request $request) {
+        $request->validate($this->rules(), $this->messages());
 
+        $item = Barang::where('kd_brg', $request->id)->first();
+
+        $item->kd_brg = $request->kd_brg;
+        $item->nm_brg = $request->nm_brg;
+        $item->hrg_beli = $request->hrg_beli;
+        $item->hrg_jual = $request->hrg_jual;
+        $item->jml_brg = $request->jml_brg;
+        $item->satuan = $request->satuan;
+
+        $success = $item->save();
+
+        if($success) {
+            return back()->with('message', 'Data barang berhasil diedit');
+        } else {
+            return back()->with('error', 'Data barang gagal diedit');
+        }
+
+    }
+
+    public function delete($id) {
+        $item = Barang::where('kd_brg', $id)->first();
+
+        if($item) {
+            Barang::destroy($item->kd_brg);
+
+            return back()->with('message', 'Kode barang '.$item->kd_brg.' berhasil dihapus');
+        } else {
+            return back()->with('error', 'Data barang tidak ditemukan');
+        }
     }
 
     public function rules() {

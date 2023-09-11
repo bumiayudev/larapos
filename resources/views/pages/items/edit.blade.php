@@ -5,11 +5,11 @@
 @if(Session::has('message'))
     <div class="position-relative mt-4 mb-4" aria-live="polite" aria-atomic="true">
         <div class="toast-container top-0 end-0">
-            <div class="toast fade show" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="2000" >
+            <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="true" data-bs-delay="2000" >
                 <div class="toast-body  bg-primary text-white">
                     <i class="fas fa-circle-check fa-fw"></i>
                     {{ Session::get('message') }}
-                    <button type="button" class="btn-close btn-sm btn-white float-sm-end" data-bs-dismiss="toast" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn-sm btn-white float-sm-end" data-dismiss="toast" aria-label="Close"></button>
                 </div>
             </div>
 
@@ -20,7 +20,7 @@
     @if(Session::has('error'))
     <div class="position-relative mt-4 mb-4" aria-live="polite" aria-atomic="true">
         <div class="toast-container top-0 end-0">
-            <div class="toast fade show" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="2000" >
+            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="2000" >
                 <div class="toast-body  bg-danger text-white">
                     <i class="fas fa-exclamation-circle fa-fw"></i>
                     {{ Session::get('error') }}
@@ -42,6 +42,7 @@
                 <div class="form-group">
                     <label for="kd_brg">Kode Barang</label>
                     <input type="text" name="kd_brg" id="kd_brg" class="form-control @error('kd_brg') is-invalid @enderror" value="{{ old('kd_brg', $kd_brg) }}" autocomplete="off">
+                    <input type="hidden" name="id" value="{{ $id }}">
                 </div>
                 @error('kd_brg')
                     <div class="alert alert-danger">{{ $message }}</div>
@@ -87,5 +88,11 @@
         </div>
     </div>
 </div>
-
+@push('addon-script')
+<script>
+    $('.btn-close').on('click', function() {
+        $('.toast').toast('hide');
+    });
+</script>
+@endpush
 @endsection

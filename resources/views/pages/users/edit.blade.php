@@ -74,5 +74,11 @@
         </div>
     </div>
 </div>
-
+@push('addon-script')
+<script>
+    $('.btn-close').on('click', function() {
+        $('.toast').toast('hide');
+    });
+</script>
+@endpush
 @endsection

@@ -25,9 +25,10 @@ Route::middleware(['auth.user'])->group(function () {
     Route::get('/users/delete/{id}', [UserController::class, 'delete']);
     Route::get('/items', [ItemController::class, 'index'])->name('items');
     Route::get('/items/create', [ItemController::class, 'create'])->name('items.create');
-    Route::get('/items/edit/{id}', [UserController::class, 'edit']);
+    Route::get('/items/edit/{id}', [ItemController::class, 'edit']);
     Route::post('/items/store', [ItemController::class, 'store'])->name('items.store');
     Route::post('/items/update', [ItemController::class, 'update'])->name('items.update');
+    Route::get('/items/delete/{id}', [ItemController::class, 'delete']);
 });
 
 Route::get('/signin', [UserController::class, 'signin'])->name('signin');

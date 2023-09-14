@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use DataTables;
 use Illuminate\Routing\UrlGenerator;
+use Picqer;
 
 class ItemController extends Controller
 {
@@ -144,5 +145,14 @@ class ItemController extends Controller
         ];
 
         return $messages;
+    }
+
+    public function generate_barcode($id) {
+       
+        $data = array(
+            'user'=> Session::get('user'),
+            'kd_brg' => $id
+        );
+        return view('pages.items.barcode', $data);
     }
 }

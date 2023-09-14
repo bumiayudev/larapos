@@ -36,7 +36,11 @@
             serverSide: true,
             ajax: "{{ route('items') }}",
             columns: [
-                {data: 'kd_brg', name:'kd_brg'},
+                {data: 'kd_brg', name:'kd_brg',
+                 render: function(data, type, row, i) {
+                    return ''+row.kd_brg+'<br /><a href="/items/generate_barcode/'+row.kd_brg+'" target="_blank" class="btn btn-sm btn-primary"><i class="fas fa-barcode fa-fw"></i> Generate Barcode</a>';
+                 }
+                },
                 {data: 'nm_brg', name:'nm_brg'},
                 {data: 'hrg_beli', name: 'hrg_beli'},
                 {data:'hrg_jual' , name: 'hrg_jual'},

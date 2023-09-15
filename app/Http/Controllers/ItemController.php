@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Session;
 use DataTables;
 use Illuminate\Routing\UrlGenerator;
 use Picqer;
+use PDF;
 
 class ItemController extends Controller
 {
@@ -154,5 +155,16 @@ class ItemController extends Controller
             'kd_brg' => $id
         );
         return view('pages.items.barcode', $data);
+    }
+
+    public function download_barcode($id)
+    {
+        $data = array(
+            'kd_brg' => $id
+        );
+        $pdf = PDF::loadView('pdf.barcode',$data);
+
+
+        return $pdf->download('barcode.pdf');
     }
 }

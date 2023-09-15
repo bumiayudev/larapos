@@ -30,6 +30,7 @@ Route::middleware(['auth.user'])->group(function () {
     Route::post('/items/update', [ItemController::class, 'update'])->name('items.update');
     Route::get('/items/delete/{id}', [ItemController::class, 'delete']);
     Route::get('/items/generate_barcode/{id}', [ItemController::class,  'generate_barcode']);
+    Route::get('/items/download_barcode/{id}', [ItemController::class, 'download_barcode']);
 });
 
 Route::get('/signin', [UserController::class, 'signin'])->name('signin');

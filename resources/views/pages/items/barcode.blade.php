@@ -15,7 +15,7 @@
             {!! $generator->getBarcode($kd_brg, $generator::TYPE_CODE_128) !!} <br>
             {!! $kd_brg !!}
         </div>
-        <div class="float-end"><button class="btn btn-sm btn-primary"><i class="fas fa-print fa-fw"></i>Print</button></div>
+        <div class="float-end"><a href="{{ url('/items/download_barcode')}}/{!! $kd_brg !!}" target="_blank" role="button" class="btn btn-sm btn-primary"><i class="fas fa-download fa-fw"></i>Download</a></div>
     </div>
    </div>
 

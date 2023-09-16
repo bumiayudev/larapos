@@ -34,7 +34,7 @@
                             <a href="{{ route('items') }}" class="dropdown-item"><i class="fas fa-cubes"></i> Barang</a>
                         </div>
                     </div>
-                    <a href="{{ url('/') }}" class="nav-item nav-link"><i class="fas fa-cash-register"></i> Transaksi</a>
+                    <a href="{{ route('sales') }}" class="nav-item nav-link"><i class="fas fa-cash-register"></i> Transaksi</a>
                     <a href="{{ url('/') }}" class="nav-item nav-link"><i class="fas fa-chart-line"></i> Laporan</a>
                 </div>
             </nav>

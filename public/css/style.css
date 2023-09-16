@@ -275,3 +275,108 @@
     background: var(--dark);
     border-color: var(--primary);
 }
+
+.headerFaktur {
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+.headerFaktur .hLeft {
+    font-size: 18px;
+}
+.headerFaktur .hLeft #faktur{
+    border: none;
+    font-weight: 100;
+}
+.headerFaktur .hMid {
+    font-size: 18px;
+}
+.headerFaktur .hMid #tgl {
+    border: none;
+    font-weight: 100;
+}
+.headerFaktur .hRight {
+    font-size: 18px;
+}
+.headerFaktur .hRight #jam{
+    border: none;
+    font-weight: 100;
+}
+
+.bTrans .fSales{
+    display: flex;
+    flex-direction: row;
+}
+
+.bTrans .fSales .actionSales {
+    width: 30%;
+}
+
+.bTrans .fSales .inputItem {
+    width: 30%;
+}
+
+.bTrans .fSales .inputItem #txtItem{
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 0.5px solid #333;
+}
+
+.bTrans .fSales .inputItem #txtItem:focus{
+    outline: none;
+}
+
+.bTrans .fSales .inputPayment {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+}
+
+.bTrans .fSales .inputPayment .divTotal #txtTotal{
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 0.5px solid #333;
+}
+
+.bTrans .fSales .inputPayment .divTotal #txtTotal:focus{
+    outline: none;
+}
+
+.bTrans .fSales .inputPayment .divDibayar #txtDibayar{
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 0.5px solid #333;
+}
+
+.bTrans .fSales .inputPayment .divDibayar #txtDibayar:focus{
+    outline: none;
+}
+
+.bTrans .fSales .inputPayment .divKembali #txtKembali{
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 0.5px solid #333;
+}
+
+.bTrans .fSales .inputPayment .divKembali #txtKembali:focus{
+    outline: none;
+}
+
+.bTrans .fSales .inputPayment .divTotal {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.bTrans .fSales .inputPayment .divDibayar{
+    display: grid;
+    grid-template-columns: auto auto; 
+}
+
+.bTrans .fSales .inputPayment .divKembali{
+    display: grid;
+    grid-template-columns: auto auto; 
+}

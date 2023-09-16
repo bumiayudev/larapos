@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 
 /*
@@ -31,6 +32,7 @@ Route::middleware(['auth.user'])->group(function () {
     Route::get('/items/delete/{id}', [ItemController::class, 'delete']);
     Route::get('/items/generate_barcode/{id}', [ItemController::class,  'generate_barcode']);
     Route::get('/items/download_barcode/{id}', [ItemController::class, 'download_barcode']);
+    Route::get('/sales', [SaleController::class, 'index'])->name('sales');
 });
 
 Route::get('/signin', [UserController::class, 'signin'])->name('signin');

@@ -380,3 +380,13 @@
     display: grid;
     grid-template-columns: auto auto; 
 }
+
+.bTrans .fSales .inputItem .presentation .item {
+    border: none;
+    color :#0f0f0f;
+}
+
+.bTrans .fSales .inputItem .presentation .item:hover {
+    border: none;
+    color: #3388cd;
+}

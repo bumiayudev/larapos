@@ -72,6 +72,7 @@
                                 <div class="inputItem">
                                     <label for="txtItem">Item : </label>
                                     <input type="text" id="txtItem" placeholder="B001">
+                                    <div class="presentation"></div>
                                 </div>
                                 <div class="inputPayment">
                                     <div class="divTotal">
@@ -94,4 +95,33 @@
                 </div>
 
     </div>
+
+   @push('addon-script')
+    <script>
+        $(function() {
+            let listItem = $('.presentation');
+            $('#txtItem').on('keyup', function(){
+                let txtItem = $(this).val();
+
+                if(!txtItem || txtItem == ''){
+                    listItem.html('');
+                } else {
+                    
+                    $.ajax({
+                        url: '/api/items',
+                        type: 'POST',
+                        data: { search : txtItem},
+                        dataType: 'JSON',
+                        success: function(result) {
+                            result.forEach((row) => {
+                                    listItem.html('\
+                                    [ <a href="#" class="item">'+row.kd_brg+' - '+row.nm_brg+'</a> ]')
+                                });
+                        }
+                    })
+                }
+            })
+        });
+    </script>
+   @endpush
 @endsection

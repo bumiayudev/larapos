@@ -9,15 +9,15 @@
                         <div class="headerFaktur">
                             <div class="hLeft">
                                 <label for="faktur">Faktur : </label>
-                                <input type="text" id="faktur" placeholder="FR202309160001" readonly>
+                                <input type="text" id="faktur" placeholder="{{ $no_faktur }}" readonly>
                             </div>
                             <div class="hMid">
                                 <label for="tgl">Tanggal : </label>
-                                <input type="text" id="tgl" placeholder="16-09-2023" readonly>
+                                <input type="text" id="tgl" placeholder="{{ $tgl }}" readonly>
                             </div>
                             <div class="hRight">
                                 <label for="Jam">Jam :</label>
-                                <input type="text" id="jam" placeholder="19:00" readonly>
+                                <input type="text" id="jam" placeholder="{{ $jam }}" readonly>
                             </div>
                         </div>
                         <div class="bTrans mt-4">
@@ -100,6 +100,7 @@
     <script>
         $(function() {
             let listItem = $('.presentation');
+            listItem.html('');
             $('#txtItem').on('keyup', function(){
                 let txtItem = $(this).val();
 
@@ -113,15 +114,30 @@
                         data: { search : txtItem},
                         dataType: 'JSON',
                         success: function(result) {
-                            result.forEach((row) => {
+                            if(result.length) {
+                                result.forEach((row) => {
                                     listItem.html('\
-                                    [ <a href="#" class="item">'+row.kd_brg+' - '+row.nm_brg+'</a> ]')
+                                    [ <a href="#" class="item" onclick="addCart(this)" data-kdbrg="'+row.kd_brg+'" data-nmbrg="'+row.nm_brg+'" data-hrg="'+row.hrg_jual+'" data-jml="1">'+row.kd_brg+' - '+row.nm_brg+'</a> ]')
                                 });
+                            } else {
+                                listItem.html('Data barang tidak ditemukan!.');
+                            }
+                        },
+                        error: function() {
+                            if(txtItem == '' || txtItem == undefined){
+                                listItem.html('');
+                            }
                         }
                     })
                 }
             })
         });
+        function addCart(el) {
+            let kdBrg = $(el).data('kdbrg');
+            let nmBrg = $(el).data('nmbrg');
+            let hrg = $(el).data('hrg');
+            let jml = $(el).data('jml');
+        }
     </script>
    @endpush
 @endsection

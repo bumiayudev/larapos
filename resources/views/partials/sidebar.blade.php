@@ -34,7 +34,13 @@
                             <a href="{{ route('items') }}" class="dropdown-item"><i class="fas fa-cubes"></i> Barang</a>
                         </div>
                     </div>
-                    <a href="{{ route('sales') }}" class="nav-item nav-link"><i class="fas fa-cash-register"></i> Transaksi</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fas fa-store me-2"></i>Transaksi</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="{{ route('sales') }}" class="nav-item nav-link"><i class="fas fa-shopping-basket"></i> Penjualan</a>
+
+                        </div>
+                    </div>
                     <a href="{{ url('/') }}" class="nav-item nav-link"><i class="fas fa-chart-line"></i> Laporan</a>
                 </div>
             </nav>

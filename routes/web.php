@@ -33,8 +33,13 @@ Route::middleware(['auth.user'])->group(function () {
     Route::get('/items/delete/{id}', [ItemController::class, 'delete']);
     Route::get('/items/generate_barcode/{id}', [ItemController::class,  'generate_barcode']);
     Route::get('/items/download_barcode/{id}', [ItemController::class, 'download_barcode']);
+    Route::get('/items/print_barcode/{id}', [ItemController::class, 'print_barcode']);
+    Route::get('/items/print_all_barcode', [ItemController::class, 'print_all_barcode']);
     Route::get('/sales', [SaleController::class, 'index'])->name('sales');
     Route::get('/generate_inv', [InvoiceController::class, 'invoice_number']);
+    Route::get('/sales/load_sales', [SaleController::class, 'load_sales'])->name('sales.load_sales');
+    Route::post('/sales/store_cart', [SaleController::class, 'store_cart'])->name('sales.store_cart');
+    Route::post('/sales/add_cart',[SaleController::class, 'add_cart'])->name('sales.add_cart');
 });
 
 Route::get('/signin', [UserController::class, 'signin'])->name('signin');

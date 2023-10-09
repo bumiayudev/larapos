@@ -40,6 +40,7 @@ Route::middleware(['auth.user'])->group(function () {
     Route::get('/sales/load_sales', [SaleController::class, 'load_sales'])->name('sales.load_sales');
     Route::post('/sales/store_cart', [SaleController::class, 'store_cart'])->name('sales.store_cart');
     Route::post('/sales/add_cart',[SaleController::class, 'add_cart'])->name('sales.add_cart');
+    Route::get('/sales/delete_cart/{id}', [SaleController::class, 'delete_cart']);
 });
 
 Route::get('/signin', [UserController::class, 'signin'])->name('signin');

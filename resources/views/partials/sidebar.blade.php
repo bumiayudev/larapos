@@ -13,7 +13,7 @@
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
                 <a href="{{ route('home') }}" class="navbar-brand mx-4 mb-3">
-                    <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>RAFASTORE</h3>
+                    <h3 class="text-primary"><i class="fas fa-hashtag me-2"></i>RAFASTORE</h3>
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="position-relative">
@@ -26,16 +26,16 @@
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
-                    <a href="{{ url('/') }}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="{{ url('/') }}" class="nav-item nav-link active"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>File</a>
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="far fa-file-alt me-2"></i>File<i class="fas fa-angle-down float-end mt-2"></i></a>
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="{{ route('users') }}" class="dropdown-item"><i class="fas fa-user"></i> Pengguna</a>
                             <a href="{{ route('items') }}" class="dropdown-item"><i class="fas fa-cubes"></i> Barang</a>
                         </div>
                     </div>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fas fa-store me-2"></i>Transaksi</a>
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fas fa-store me-2"></i>Transaksi<i class="fas fa-angle-down float-end mt-2"></i></a>
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="{{ route('sales') }}" class="nav-item nav-link"><i class="fas fa-shopping-basket"></i> Penjualan</a>
 

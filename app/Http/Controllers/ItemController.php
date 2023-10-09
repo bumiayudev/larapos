@@ -167,4 +167,29 @@ class ItemController extends Controller
 
         return $pdf->download('barcode.pdf');
     }
+
+    public function print_barcode($id)
+    {
+        $data = array(
+            'kd_brg' => $id
+        );
+        $pdf = PDF::loadView('pdf.barcode', $data);
+
+        return $pdf->stream('cetak-barcode.pdf');
+    }
+
+    public function print_all_barcode(Request $request)
+    {
+        $datas = [];
+        $codes = $request->query('item_codes');
+        foreach ($codes as $key => $value) {
+           array_push($datas, $value);
+        }
+
+        $pdf = PDF::loadView('pdf.generate_all_barcode', $datas);
+
+        return $pdf->stream('cetak-barcode.pdf');
+    }
+
+    
 }

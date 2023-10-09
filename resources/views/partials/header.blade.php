@@ -7,22 +7,19 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
 
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/regular.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/solid.min.css') }}" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
     <link href="{{asset('lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
-    <link href="{{asset('lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css')}}" rel="stylesheet" />
+    <!-- <link href="{{asset('lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css')}}" rel="stylesheet" /> -->
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
@@ -31,6 +28,29 @@
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
 
     <!-- Datatables -->
-    <link href="https://cdn.datatables.net/v/bs4-4.6.0/dt-1.13.6/datatables.min.css" rel="stylesheet">
- 
+    <link href="{{ asset('css/datatables.min.css') }}" rel="stylesheet">
+
+    <!-- jquery -->
+    <script src="{{ asset('lib/jquery/jquery-3.4.1.min.js') }}"></script>
+    <style type="text/css">
+
+        .ui-menu{
+            list-style: none;
+            margin-top: 10px;
+            width: 400px;
+        
+        }
+      .ui-autocomplete-row
+      {
+        padding:4px;
+        background-color: #f4f4f4;
+        border-bottom:1px solid #ccc;
+        font-weight:bold;
+      }
+      .ui-autocomplete-row:hover
+      {
+        background-color: #ddd;
+        cursor: pointer;
+      }
+    </style>
 </head>

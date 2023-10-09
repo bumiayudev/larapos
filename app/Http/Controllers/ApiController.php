@@ -9,9 +9,9 @@ class ApiController extends Controller
 {
     public function search_item(Request $request)
     {
-        $result = Barang::select('*')
-                ->where('kd_brg', 'LIKE', '%'.$request->input('search').'%')
-                ->orWhere('nm_brg', 'LIKE', '%'.$request->input('search').'%')->get();
+        $search = $request->input('search');
+        $result = Barang::where('kd_brg', 'LIKE', "%$search%")
+                   ->orWhere('nm_brg', 'LIKE', "%$search%")->get(); 
         $headers = [
             'Content-Type' => 'application/json;charset=utf-8',
             'Accept' => 'application/json'

@@ -158,8 +158,6 @@
     top: 15px;
     right: 15px;
     border: none;
-    content: "\f107";
-    font-family: "Font Awesome 5 Free";
     font-weight: 900;
     transition: .5s;
 }
@@ -200,8 +198,6 @@
     margin-left: 6px;
     vertical-align: middle;
     border: none;
-    content: "\f107";
-    font-family: "Font Awesome 5 Free";
     font-weight: 900;
     transition: .5s;
 }
@@ -309,12 +305,9 @@
 }
 
 .bTrans .fSales .actionSales {
-    width: 30%;
+    width: 40%;
 }
 
-.bTrans .fSales .inputItem {
-    width: 30%;
-}
 
 .bTrans .fSales .inputItem #txtItem{
     border-top: none;
@@ -381,12 +374,47 @@
     grid-template-columns: auto auto; 
 }
 
-.bTrans .fSales .inputItem .presentation .item {
-    border: none;
-    color :#0f0f0f;
+/* form pencarian item */
+.form-search{
+    padding: 0;
+    margin: 0;
+    width: 100%;
 }
 
-.bTrans .fSales .inputItem .presentation .item:hover {
+.form-search label{
+    font-weight: 400;
+    font-size: 24px;
+}
+
+.form-search .input-search{
+    padding: 10px;
+    width: 500px;
+    box-sizing: border-box;
+    background-color: #cce4f3;
+}
+
+.form-search .input-search input{
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 0.5px solid #333;
+}
+
+.form-search .input-search input:focus{
+    outline: none;
+}
+
+.button-prepend-add{
+    border-radius: 6px;
+    background: none;
+}
+
+.minQty{
     border: none;
-    color: #3388cd;
+    background-color: rgb(228, 67, 67);
+}
+
+.addQty{
+    border:none;
+    background-color: rgb(50, 229, 236);
 }

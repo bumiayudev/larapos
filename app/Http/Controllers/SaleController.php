@@ -106,6 +106,21 @@ class SaleController extends Controller
        return redirect()->back()->with('success', "$product->kd_brg berhasil ditambahkan di keranjang.");
     }
 
+    public function delete_cart($id)
+    {
+    
+        $cart = session()->get('cart');
+
+        if (isset($cart[$id])) {
+            unset($cart[$id]);
+    
+            session()->put('cart', $cart);
+        }
+    
+
+        return redirect()->back();
+    }
+
     public function store_cart(Request $request)
     {
         $user = Session::get('user');

@@ -63,12 +63,12 @@
                                             <th>Harga</th>
                                             <th>Jumlah</th>
                                             <th>Total</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if (session('cart'))
+                                    @if (session('cart'))
                                             @foreach (session('cart') as $details )
-                                              
                                                 <tr class="cart">
                                                     <td>{{ $loop->iteration }}.</td>
                                                     <td>{{ $details['code'] }}</td>
@@ -82,15 +82,18 @@
                                                         <input type="text" class="amountItem" id="amountItem_{{$loop->iteration}}" name="amountItem" value="{{ $details['quantity'] }}" style="width: 60px; border-radius:8px; align-items:center;">
                                                         <button class="addQty" data-id="{{$loop->iteration}}">+</button>
                                                     </td>
-                                                    <td id="totalPrice_{{ $loop->iteration }}">
-                                                        <input type="hidden" class="subtotal" id="subtotal_{{ $loop->iteration }}" name="subTotal" value="{{ $details['price'] * $details['quantity']}}">
+                                                    <td id="totalPrice_{{ $loop->iteration }}" class="subtotal">
+                                                        <input type="hidden" id="subtotal_{{ $loop->iteration }}" name="subTotal" value="{{ $details['price'] * $details['quantity']}}">
                                                         {{ number_format($details['price'] * $details['quantity'], 0, ",", ".") }}
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ URL::to('sales/delete_cart/'.$details['code']) }}" class="btn btn-sm btn-outline-danger" role="button"><i class="fas fa-times fa-fw"></i> Hapus</a>
                                                     </td>
                                                 </tr>
                                             @endforeach
                                             @else
                                             <tr>
-                                                <td colspan="6" align="center">Belum ada produk...</td>
+                                                <td colspan="6" align="center">Belum ada barang yang dimasukan...</td>
                                             </tr>
                                         @endif
                                     </tbody>
@@ -192,6 +195,7 @@
          
         })
        
+        // fungsi kurangi qty barang
        $(document).on('click', '.minQty', function(e){
             e.preventDefault();
             let id = $(this).data('id');
@@ -206,6 +210,7 @@
            totalCalculate();
        });
 
+        // fungsi tambah qty barang    
        $(document).on('click', '.addQty', function(e) {
             e.preventDefault();
             let id = $(this).data('id');
@@ -220,39 +225,38 @@
            totalCalculate();
        });
        
-      
-        /* Fungsi formatRupiah */
-        function formatRupiah(angka){
-            var number_string = angka.toString().replace(/[^,\d]/g, ''),
-            split   		= number_string.split(','),
-            sisa     		= split[0].length % 3,
-            rupiah     		= split[0].substr(0, sisa),
-            ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
-        
-            // tambahkan titik jika yang di input sudah menjadi angka ribuan
-            if(ribuan){
-                separator = sisa ? '.' : '';
-                rupiah += separator + ribuan.join('.');
-            }
-        
-            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
-            return rupiah;
-        }
-
-        /* fungsi total belanja*/
-        function totalCalculate(){
+      /* fungsi total belanja */
+      function totalCalculate(){
             let total = 0;
-            $('table tbody tr.cart td input.subtotal').each(function(){
-                let subtotal = $(this).val() != "" ? parseInt($(this).val()) : 0;
+            $('table#cartSales tbody tr.cart td.subtotal').each(function(){
+                let subtotal = $(this).text() != "" ? convertToAngka($(this).text()) : 0;
 
                 if(!isNaN(subtotal)){
                     total += subtotal;
                 }
                 
-                // console.log(total)
                 $('#txtTotal').val(formatRupiah(total));
             });
+    }
+     
+    /* fungsi total kembalian */
+    $(document).on('keyup', '#txtDibayar', function(){
+        let dibayar = $(this).val();
+        $(this).val(formatRupiah(dibayar));
+
+        let totalHarga = convertToAngka($('#txtTotal').val());
+        let totalBayar = convertToAngka($(this).val());
+        let totalKembali = parseInt(totalBayar) - parseInt(totalHarga);
+
+        if(Math.sign(totalKembali) == -1){
+            $('#txtKembali').val("-"+formatRupiah(totalKembali));
+        } else if(Math.sign(totalKembali) == 1){
+            $('#txtKembali').val(formatRupiah(parseInt(totalKembali)));
+        } else if(Math.sign(totalKembali) == 0){
+            $('#txtKembali').val(totalKembali);
         }
+
+    });
     </script>
    @endpush
 @endsection

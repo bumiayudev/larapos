@@ -3,6 +3,7 @@
 use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SaleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,3 +20,4 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 Route::post('/items', [ApiController::class, 'search_item'])->name('api.search_item');
+Route::post('/sales/store_cart', [SaleController::class, 'store_cart'])->name('sales.store_cart');

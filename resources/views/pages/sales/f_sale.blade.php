@@ -101,10 +101,13 @@
                             </div>
                             <div class="fSales mt-4 mb-4">
                                 <div class="actionSales">
-                                    <button class="rounded btn btn-sm btn-outline-dark">Simpan</button>
-                                    <button class="rounded btn btn-sm btn-outline-dark">Batal</button>
+                                    <button type="button" class="rounded btn btn-sm btn-outline-dark" id="saveCart">Simpan</button>
+                                    <a href="{{ route('sales.reset_cart') }}" role="button" class="rounded btn btn-sm btn-outline-dark">Batal</a>
                                 </div>
-                               
+                               <div class="item">
+                                    <label for="totalItem">Total Item : </label>
+                                    <input type="text" class="total-Item" id="totalItem" readonly>
+                               </div>
                                 <div class="inputPayment">
                                     <div class="divTotal">
                                         <label for="txtTotal">Total : </label>
@@ -137,6 +140,8 @@
         });
        
         totalCalculate();
+
+        totalItem();
 
         // searching item code or item name using autocomplete jquery ui
         $(document).on('keyup', '#txtItem', function(){
@@ -208,6 +213,7 @@
            $('#subtotal_'+id+'').val(total);
            $('table').find('tr td#totalPrice_'+id+'').text(formatRupiah(parseInt(total)));
            totalCalculate();
+           totalItem();
        });
 
         // fungsi tambah qty barang    
@@ -223,6 +229,7 @@
            $('#subtotal_'+id+'').val(total);
            $('table').find('tr td#totalPrice_'+id+'').text(formatRupiah(parseInt(total)));
            totalCalculate();
+           totalItem();
        });
        
       /* fungsi total belanja */
@@ -239,6 +246,21 @@
             });
     }
      
+    /* fungsi total item */
+    function totalItem(){
+        let totalItem=0;
+        $('table#cartSales tbody tr.cart').each((row, tr) => {
+            let amount = $(tr).find('td input[name="amountItem"]').val();
+            let item = amount !== "" ? convertToAngka(amount): 0;
+
+            if(!isNaN(item)) {
+                totalItem += item;
+            }
+
+            $('#totalItem').val(totalItem);
+        })
+    }
+
     /* fungsi total kembalian */
     $(document).on('keyup', '#txtDibayar', function(){
         let dibayar = $(this).val();
@@ -256,6 +278,55 @@
             $('#txtKembali').val(totalKembali);
         }
 
+    });
+
+    /* fungsi proses simpan cart */
+    $(document).on('click','#saveCart', function(){
+        
+        $('#cartSales tbody tr').each((row, tr) => {
+            
+        let dataTable = [];
+        let hrg = convertToAngka($(tr).find('td:eq(3)').text());
+        let jml = $(tr).find('td:eq(4) input[name=amountItem]').val();
+        let subtotal = convertToAngka($(tr).find('td:eq(5)').text());
+
+        if( $(tr).find('td:eq(1)').text() == "" ){
+            alert('Mohon maaf belum ada barang yang dipesan di keranjang');
+        } else if(convertToAngka($('#txtDibayar').val()) < convertToAngka($('#txtTotal').val())){
+            alert('Nominal pembayaran masih kurang dari nominal belanja');
+        } else if( ($('#txtDibayar').val() == "")){
+            alert('Nominal pembayaran masih kurang dari nominal belanja');
+        }else {
+            let sub = {
+                'kd_brg': $(tr).find('td:eq(1)').text(),
+                'nm_brg': $(tr).find('td:eq(2)').text(),
+                'hrg': hrg,
+                'jml_brg': jml,
+                'subtotal': subtotal
+
+            }
+            dataTable.push(sub);
+
+            $.ajax({
+               url: "{{ route('sales.store_cart') }}",
+               type: "POST",
+               dataType: "json",
+               data: {
+                'data_table': dataTable, 
+                'faktur': $('#faktur').val(),
+                'tgl': $('#tgl').val(),
+                'jam': $('#jam').val(),
+                'item': $('#txtItem').val(),
+                'total': $('#txtTotal').val(),
+                'dibayar': $('#txtDibayar').val(),
+                'kembali': $('#txtKembali').val()
+                }
+            })
+        }
+        
+
+
+      });
     });
     </script>
    @endpush

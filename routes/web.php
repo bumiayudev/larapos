@@ -38,9 +38,9 @@ Route::middleware(['auth.user'])->group(function () {
     Route::get('/sales', [SaleController::class, 'index'])->name('sales');
     Route::get('/generate_inv', [InvoiceController::class, 'invoice_number']);
     Route::get('/sales/load_sales', [SaleController::class, 'load_sales'])->name('sales.load_sales');
-    Route::post('/sales/store_cart', [SaleController::class, 'store_cart'])->name('sales.store_cart');
     Route::post('/sales/add_cart',[SaleController::class, 'add_cart'])->name('sales.add_cart');
     Route::get('/sales/delete_cart/{id}', [SaleController::class, 'delete_cart']);
+    Route::get('/sales/reset_cart', [SaleController::class, 'reset_cart'])->name('sales.reset_cart');
 });
 
 Route::get('/signin', [UserController::class, 'signin'])->name('signin');

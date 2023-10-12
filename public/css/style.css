@@ -309,16 +309,6 @@
 }
 
 
-.bTrans .fSales .inputItem #txtItem{
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-bottom: 0.5px solid #333;
-}
-
-.bTrans .fSales .inputItem #txtItem:focus{
-    outline: none;
-}
 
 .bTrans .fSales .inputPayment {
     width: 40%;
@@ -326,11 +316,12 @@
     flex-direction: column;
 }
 
+.bTrans .fSales .inputPayment .divTotal, .divDibayar, .divKembali{
+    border-bottom:.5px solid #191C24;
+}
+
 .bTrans .fSales .inputPayment .divTotal #txtTotal{
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-bottom: 0.5px solid #333;
+   border: none;
 }
 
 .bTrans .fSales .inputPayment .divTotal #txtTotal:focus{
@@ -338,10 +329,7 @@
 }
 
 .bTrans .fSales .inputPayment .divDibayar #txtDibayar{
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-bottom: 0.5px solid #333;
+   border: none;
 }
 
 .bTrans .fSales .inputPayment .divDibayar #txtDibayar:focus{
@@ -349,10 +337,7 @@
 }
 
 .bTrans .fSales .inputPayment .divKembali #txtKembali{
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-bottom: 0.5px solid #333;
+   border: none;
 }
 
 .bTrans .fSales .inputPayment .divKembali #txtKembali:focus{
@@ -417,4 +402,28 @@
 .addQty{
     border:none;
     background-color: rgb(50, 229, 236);
+}
+
+.bTrans .fSales .item{
+    width: 20%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    border-bottom:.5px solid #191C24;
+    height: 30px;
+    margin-right: 20px;
+}
+
+.bTrans .fSales .item input{
+    width: 30px;
+    border: none;
+   display: block;
+   margin-left: 10px;
+   text-align: center;
+   font-weight: 400;
+}
+
+.bTrans .fSales .item input:focus{
+    outline: none;
 }

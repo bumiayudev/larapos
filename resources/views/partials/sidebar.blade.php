@@ -28,7 +28,7 @@
                 <div class="navbar-nav w-100">
                     <a href="{{ url('/') }}" class="nav-item nav-link active"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="far fa-file-alt me-2"></i>File<i class="fas fa-angle-down float-end mt-2"></i></a>
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-server me-2"></i>File<i class="fas fa-angle-down float-end mt-2"></i></a>
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="{{ route('users') }}" class="dropdown-item"><i class="fas fa-user"></i> Pengguna</a>
                             <a href="{{ route('items') }}" class="dropdown-item"><i class="fas fa-cubes"></i> Barang</a>
@@ -38,10 +38,17 @@
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fas fa-store me-2"></i>Transaksi<i class="fas fa-angle-down float-end mt-2"></i></a>
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="{{ route('sales') }}" class="nav-item nav-link"><i class="fas fa-shopping-basket"></i> Penjualan</a>
-
+                            <a href="{{ route('home') }}" class="nav-item nav-link"><i class="fas fa-list"></i> Daftar Transaksi</a>
                         </div>
                     </div>
-                    <a href="{{ url('/') }}" class="nav-item nav-link"><i class="fas fa-chart-line"></i> Laporan</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fas fa-chart-line me-2"></i>Laporan<i class="fas fa-angle-down float-end mt-2"></i></a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                        <a href="{{ route('report.items') }}" target="_blank" class="nav-item nav-link"><i class="far fa-chart-bar"></i> Master Barang</a>
+                        <a href="{{ route('report.sales') }}" class="nav-item nav-link"><i class="far fa-chart-bar"></i> Transaksi Penjualan</a>
+                        </div>
+                    </div>
+                    
                 </div>
             </nav>
         </div>

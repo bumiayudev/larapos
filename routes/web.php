@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 
@@ -44,6 +45,8 @@ Route::middleware(['auth.user'])->group(function () {
     Route::get('/sales/reset_cart', [SaleController::class, 'reset_cart'])->name('sales.reset_cart');
     Route::get('/sales/delete_cart', [SaleController::class, 'destroy_cart'])->name('sales.delete_cart');
     Route::get('/sales/print_receipt/{faktur}', [SaleController::class, 'print_receipt']);
+    Route::get('/report/items', [ReportController::class, 'items'])->name('report.items');
+    Route::get('/report/sales', [ReportController::class, 'sales'])->name('report.sales');
 });
 
 Route::get('/signin', [UserController::class, 'signin'])->name('signin');

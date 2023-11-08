@@ -4,9 +4,9 @@
 
 <div class="container-fluid px-4 pt-4">
     <h4>Daftar semua data pengguna</h4>
-    <div class="float-end mb-2"><a href="{{ route('users.create') }}" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i> Tambah</a></div>
     <div class="table-responsive mt-4">
-        <table class="table table-primary" id="tbUser">
+        <div class="float-end mb-2"><a href="{{ route('users.create') }}" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i> Tambah</a></div>
+        <table class="table" id="tbUser">
             <thead>
                 <tr>
                     <th scope="col">Kode Petugas</th>

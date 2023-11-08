@@ -45,7 +45,7 @@
                                 @error('kdBrg')
                                     <div class="mt-2 mb-2 alert alert-danger">{{ $message }}</div>
                                 @enderror
-                                <input type="text" id="txtItem" placeholder="Contoh : B001" class="txt-search">
+                                <input type="text" id="txtItem" placeholder="Contoh : B001" class="txt-search" autocomplete="off">
                                 <input type="text" id="qty" name="qty" class="qty-item" value="1">
                                 <input type="hidden" id="kdBrg" name="kdBrg">
                                 <button type="submit" id="btnAddSale" class="button-prepend-add"><i class="fas fa-plus"></i>Tambah</button>
@@ -67,8 +67,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    @if (session('cart'))
-                                            @foreach (session('cart') as $details )
+                                    @if (!empty($cart))
+                                            @foreach ($cart as $details )
                                                 <tr class="cart">
                                                     <td>{{ $loop->iteration }}.</td>
                                                     <td>{{ $details['code'] }}</td>
@@ -101,7 +101,7 @@
                             </div>
                             <div class="fSales mt-4 mb-4">
                                 <div class="actionSales">
-                                    <button type="button" class="rounded btn btn-sm btn-outline-dark" id="saveCart">Simpan</button>
+                                    <button type="button" class="rounded btn btn-sm btn-outline-dark" id="saveCart" name="saveCart">Simpan</button>
                                     <a href="{{ route('sales.reset_cart') }}" role="button" class="rounded btn btn-sm btn-outline-dark">Batal</a>
                                 </div>
                                <div class="item">
@@ -135,6 +135,11 @@
     <script src="{{ asset('lib/jquery/jquery-ui.js') }}"></script>
     <script>
         let CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        let setNumber = ()=> {
+            let tableLen = $('#cartSales tbody tr').length + 1;
+
+        }
+        
         $('.btn-close').on('click', function() {
             $('.toast').toast('hide');
         });
@@ -143,6 +148,9 @@
 
         totalItem();
 
+        // set kd_ptg 
+        let kd_ptg =  "{{ $user['kd_ptg'] }}";
+        
         // searching item code or item name using autocomplete jquery ui
         $(document).on('keyup', '#txtItem', function(){
          let q = $(this).val();
@@ -281,53 +289,78 @@
     });
 
     /* fungsi proses simpan cart */
-    $(document).on('click','#saveCart', function(){
-        
-        $('#cartSales tbody tr').each((row, tr) => {
-            
+    $('#saveCart').on('click', function(e){
+        e.preventDefault();
         let dataTable = [];
-        let hrg = convertToAngka($(tr).find('td:eq(3)').text());
-        let jml = $(tr).find('td:eq(4) input[name=amountItem]').val();
-        let subtotal = convertToAngka($(tr).find('td:eq(5)').text());
+        let faktur = $('#faktur').val();
+        $('#cartSales tbody tr').each((row, tr) => {
+            let hrg = convertToAngka($(tr).find('td:eq(3)').text());
+            let jml = convertToAngka($(tr).find('td:eq(4) input[name=amountItem]').val());
+            let subtotal = convertToAngka($(tr).find('td:eq(5)').text());
+            
+            if( $(tr).find('td:eq(1)').text() == "" ){
+                alert('Mohon maaf belum ada barang yang dimasukkan');
+            } 
 
-        if( $(tr).find('td:eq(1)').text() == "" ){
-            alert('Mohon maaf belum ada barang yang dipesan di keranjang');
-        } else if(convertToAngka($('#txtDibayar').val()) < convertToAngka($('#txtTotal').val())){
-            alert('Nominal pembayaran masih kurang dari nominal belanja');
-        } else if( ($('#txtDibayar').val() == "")){
-            alert('Nominal pembayaran masih kurang dari nominal belanja');
-        }else {
+
             let sub = {
-                'kd_brg': $(tr).find('td:eq(1)').text(),
-                'nm_brg': $(tr).find('td:eq(2)').text(),
-                'hrg': hrg,
-                'jml_brg': jml,
-                'subtotal': subtotal
-
+                    'kd_brg': $(tr).find('td:eq(1)').text(),
+                    'nm_brg': $(tr).find('td:eq(2)').text(),
+                    'hrg_jual': hrg,
+                    'jml_brg': jml,
+                    'subtotal': subtotal
+    
             }
             dataTable.push(sub);
-
-            $.ajax({
-               url: "{{ route('sales.store_cart') }}",
-               type: "POST",
-               dataType: "json",
-               data: {
-                'data_table': dataTable, 
-                'faktur': $('#faktur').val(),
-                'tgl': $('#tgl').val(),
-                'jam': $('#jam').val(),
-                'item': $('#txtItem').val(),
-                'total': $('#txtTotal').val(),
-                'dibayar': $('#txtDibayar').val(),
-                'kembali': $('#txtKembali').val()
-                }
-            })
-        }
+            
+        });
         
+        console.log(dataTable);
+        if((convertToAngka($('#txtDibayar').val()) < convertToAngka($('#txtTotal').val())) || $('#txtDibayar').val() == ""){
+            alert('Nominal pembayaran masih kurang dari nominal belanja');
+        } else {
+            
+            $.ajax({
+                    url: "{{ url('/api/sales/store_cart') }}",
+                    type: "POST",
+                    dataType: "json",
+                    data: { 'data_table': dataTable,'faktur': faktur,
+                            '_token': '{{ csrf_token() }}',
+                            'tgl': $('#tgl').val(),
+                            'jam': $('#jam').val(),
+                            'item': parseInt($('#totalItem').val()),
+                            'total': convertToAngka($('#txtTotal').val()),
+                            'dibayar': convertToAngka($('#txtDibayar').val()),
+                            'kembali': convertToAngka($('#txtKembali').val()),
+                            'kd_ptg': kd_ptg
+                    },
+                    success: function(res){
+                        if(res.success == true){
+                            alert(res.message)
+                            setTimeout(() => {
+                                resetCart();
+                            }, 4000);
+                            location.href = "{{ URL::to('/sales/print_receipt') }}/"+faktur+"";
+                            
+                        }
+        
+                    }
+             });
 
+        } 
 
-      });
     });
+
+    function resetCart(){
+        $.ajax({
+            url: "{{ route('sales.delete_cart') }}",
+            success: function(res){
+                if(res.success == true){
+                    location.href = res.redirect;
+                }
+            }
+        })
+    }
     </script>
    @endpush
 @endsection

@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
+date_default_timezone_set("Asia/Jakarta");
 use App\Models\Barang;
 use Illuminate\Support\Facades\Session;
 use DataTables;
 use Illuminate\Routing\UrlGenerator;
 use Illuminate\Http\Request;
-date_default_timezone_set("Asia/Jakarta");
 use Illuminate\Support\Facades\DB;
 use App\Models\DetailJual;
 use App\Models\Penjualan;
+use App\Models\Petugas;
+use Carbon\Carbon;
+use PDF;
 
 class SaleController extends Controller
 {
@@ -21,26 +24,29 @@ class SaleController extends Controller
         $this->url = $url;
     }
 
-    public function invoice_number()
-    {
-        $latest = Penjualan::orderBy('faktur')->first();
-
-        if(!$latest) {
-            return 'F-'.date('ymd').'0001';
+    public function generateInvoiceNumber(){
+        $today = Carbon::createFromFormat('Y-m-d', date('Y-m-d'))->toDateString();
+        $max_faktur = DB::table('penjualan')->where('tanggal', $today)->count();
+       
+        if($max_faktur > 0){
+             return "F".date('ymd').str_pad(intval($max_faktur) + 1, 4, '0', STR_PAD_LEFT);
+           
+        } else {
+            return "F".date('ymd')."0001";
         }
-
-        $string = preg_replace("/[^0-9\.]/", '', $latest->faktur);
-
-        return 'F-'.date('ymd').sprintf('%04d',$string+1);
     }
 
     public function index()
     {
+
+        $no_faktur = $this->generateInvoiceNumber();
+
         $data = array(
-            'no_faktur' => $this->invoice_number(),
+            'no_faktur' => $no_faktur,
             'tgl' => date('d-m-Y'),
             'jam' => date('H:i'),
-            'user' => Session::get('user')
+            'user' => Session::get('user'),
+            'cart' => Session::get('cart')
         );
 
         return view('pages.sales.f_sale', $data);
@@ -120,51 +126,92 @@ class SaleController extends Controller
 
     public function reset_cart(){
         Session::pull('cart', null);
-        return redirect()->back()->with('success', "Berhasil menghapus semua barang belanjaan.");
+        return redirect()->back()->with('success', "Semua barang berhasil dihapus.");
     }
 
     public function store_cart(Request $request)
     {
-        $user = Session::get('user');
-        $kd_brg = $request->input('kd_brg');
-        $nm_brg = $request->input('nm_brg');
-        $hrg_jual = $request->input('hrg_jual');
-        $jml_brg = $request->input('jml_brg');
+
+        $kd_ptg = $request->input('kd_ptg');
         $faktur = $request->input('faktur');
-        $subtotal = intval($jml_brg) * intval($hrg_jual);
-        $tanggal = date_create($request->tanggal);
+        $tanggal = date('Y-m-d', strtotime($request->input('tgl')));
+        $jam = date('H:i', strtotime($request->input('jam')));
+        $item = $request->input('item');
+        $total = $request->input('total');
+        $dibayar = $request->input('dibayar');
+        $kembali = $request->input('kembali');
 
-        $item = Barang::where('kd_brg', $kd_brg)
-                ->orWhere('nm_brg', $nm_brg)
-                ->first();
+        /* Simpan inputan data penjualan */
+        $penjualan = new Penjualan();
+        $penjualan->faktur = $faktur;
+        $penjualan->tanggal = $tanggal;
+        $penjualan->jam = $jam;
+        $penjualan->item = $item;
+        $penjualan->total = $total;
+        $penjualan->dibayar = $dibayar;
+        $penjualan->kembali = $kembali;
+        $penjualan->kd_ptg = $kd_ptg;
+        $penjualan->save();
 
-        if($jml_brg > $item->jml_brg) {
-            $data = [
-                'success' => false,
-                'message' => 'Stok barang tidak tersedia'
-            ];
-            return response()->json($data);
+        $datas = $request->input('data_table');
+        // dd($datas);
+        for ($i=0; $i < count($datas) ; $i++) { 
+
+            /* simpan detail barang yg sudah dijual*/
+            $detail = new DetailJual();
+            $detail->faktur = $faktur;
+            $detail->kd_brg = $datas[$i]['kd_brg'];
+            $detail->nm_brg = $datas[$i]['nm_brg'];
+            $detail->jml_brg = $datas[$i]['jml_brg'];
+            $detail->hrg_jual = $datas[$i]['hrg_jual'];
+            $detail->subtotal = $datas[$i]['subtotal'];
+            $detail->save();
+
+            /* update jumlah barang sesuai barang yg dijual */
+            $item = Barang::where('kd_brg', $datas[$i]['kd_brg'])->first();
+            $item->jml_brg = $item->jml_brg - $datas[$i]['jml_brg'];
+            $item->save();
+          
         }
-
-        $sale = new Penjualan();
-        $sale->faktur = $faktur;
-        $sale->tanggal = date_format($tanggal, 'Y-m-d H:i:s');
-        $sale->kd_ptg = $user['kd_ptg'];
-        $sale->save();
-
-        $details = new DetailJual();
-        $details->faktur = $faktur;
-        $details->kd_brg = $kd_brg;
-        $details->nm_brg = $nm_brg;
-        $details->hrg_jual = $hrg_jual;
-        $details->jml_brg = $jml_brg;
-        $details->subtotal = $subtotal;
-        $details->save();
-
+    
         $data = [
             'success' => true,
-            'message' => 'Satu barang berhasil ditambah'
+            'message' => 'Transaksi berhasil disimpan',
+            'cart' => Session::pull('cart', null)
         ];
-        return response()->json($data);
+       
+        
+        return response()->json($data, 200);
+    }
+
+    public function print_receipt($faktur)
+    {
+        
+        $sale = Penjualan::where('faktur', $faktur)->first();
+        $details = DetailJual::where('faktur', $faktur)->get();
+        $user = Petugas::where('kd_ptg', $sale->kd_ptg)->first();
+
+        $data = array(
+            'sale' => $sale,
+            'details' => $details,
+            'user' => $user
+        );
+        
+        // return view('print.receipt')->with($data);
+
+        $pdf = PDF::loadView('print.receipt', $data)->setOption('A8', 'potrait');
+
+        return $pdf->stream('cetak-struk.pdf');
+    }
+
+    function destroy_cart()
+    {
+        Session::pull('cart', null);
+        $data = array(
+            'success' => true,
+            'redirect' => $this->url->to('/sales')
+        );
+
+        return response()->json($data, 200);
     }
 }

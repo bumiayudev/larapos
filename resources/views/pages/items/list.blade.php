@@ -4,12 +4,12 @@
 
 <div class="container-fluid px-4 pt-4">
     <h4>Daftar semua data barang</h4>
-    <div class="float-end mb-2">
-        <a href="{{ route('items.create') }}" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i> Tambah</a>
-        <button class="btn btn-sm btn-primary" id="btnGenerate"><i class="fas fa-barcode"></i> Generate Semua Barcode</button>
-    </div>
     <div class="table-responsive mt-4">
-        <table class="table table-primary" id="tbItem">
+        <div class="float-end mb-2">
+            <a href="{{ route('items.create') }}" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i> Tambah</a>
+            <button class="btn btn-sm btn-primary" id="btnGenerate"><i class="fas fa-barcode"></i> Generate Semua Barcode</button>
+        </div>
+        <table class="table" id="tbItem">
             <thead>
                 <tr>
                     <th scope="col"><input type="checkbox" name="checked_all" id="checked_all">Pilih Semua</th>
@@ -69,23 +69,22 @@
                 item_codes.push($(this).val());
             })
 
-            console.log(item_codes);
+            // console.log(item_codes);
 
             if(item_codes.length <= 0) {
                 alert('Tidak ada data barang yang dipilih.');
             } else {
                 $.ajax({
-                    url:"/items/print_all_barcode",
-                    data: {item_codes:item_codes},
-                    type:'GET',
+                    url:"{{ url('/items/send_barcode') }}",
+                    data: {item_codes:item_codes, _token: "{{ csrf_token() }}"},
+                    type:'POST',
                     dataType:'JSON',
-                    headers: {
-                            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr(
-                                "content"
-                            ),
-                        },
                     success:function(result){
-                        window.open('data:application/pdf', + escape(result));
+                        if(result.success == true) {
+                            let codes = result.codes;
+                            // console.log(codes);
+                             window.open("{{ URL::to('items/preview_barcode')}}/"+codes, "_blank");
+                        }
                     }
 
                 })

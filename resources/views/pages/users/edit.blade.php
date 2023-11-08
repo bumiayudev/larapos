@@ -61,7 +61,7 @@
                 @error('email')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
-                <div class="form-group">
+                <div class="form-group mb-2">
                     <label for="">Password</label>
                     <input type="password" name="pass" id="pass" class="form-control @error('pass') is-invalid @enderror">
                 </div>

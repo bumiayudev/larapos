@@ -34,13 +34,16 @@ Route::middleware(['auth.user'])->group(function () {
     Route::get('/items/generate_barcode/{id}', [ItemController::class,  'generate_barcode']);
     Route::get('/items/download_barcode/{id}', [ItemController::class, 'download_barcode']);
     Route::get('/items/print_barcode/{id}', [ItemController::class, 'print_barcode']);
-    Route::get('/items/print_all_barcode', [ItemController::class, 'print_all_barcode']);
+    Route::post('/items/send_barcode', [ItemController::class, 'send_barcode']);
+    Route::get('/items/preview_barcode/{codes?}', [ItemController::class, 'preview_barcode'])->name('items.preview_barcode');
     Route::get('/sales', [SaleController::class, 'index'])->name('sales');
     Route::get('/generate_inv', [InvoiceController::class, 'invoice_number']);
     Route::get('/sales/load_sales', [SaleController::class, 'load_sales'])->name('sales.load_sales');
     Route::post('/sales/add_cart',[SaleController::class, 'add_cart'])->name('sales.add_cart');
     Route::get('/sales/delete_cart/{id}', [SaleController::class, 'delete_cart']);
     Route::get('/sales/reset_cart', [SaleController::class, 'reset_cart'])->name('sales.reset_cart');
+    Route::get('/sales/delete_cart', [SaleController::class, 'destroy_cart'])->name('sales.delete_cart');
+    Route::get('/sales/print_receipt/{faktur}', [SaleController::class, 'print_receipt']);
 });
 
 Route::get('/signin', [UserController::class, 'signin'])->name('signin');

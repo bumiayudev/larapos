@@ -13,7 +13,8 @@
         "laravel/tinker": "^2.8",
         "picqer/php-barcode-generator": "^2.3",
         "yajra/laravel-datatables": "10.0",
-        "yajra/laravel-datatables-oracle": "10.3.1"
+        "yajra/laravel-datatables-oracle": "10.3.1",
+        "yearul/lara-invoice": "^0.1.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

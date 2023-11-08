@@ -74,7 +74,7 @@
                 @error('jml_brg')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
-                <div class="form-group">
+                <div class="form-group mb-2">
                     <label for="satuan">Satuan</label>
                     <input type="text" name="satuan" id="satuan" class="form-control @error('satuan') is-invalid @enderror" value="{{ old('satuan') }}">
                 </div>

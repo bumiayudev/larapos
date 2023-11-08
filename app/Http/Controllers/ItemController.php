@@ -49,7 +49,7 @@ class ItemController extends Controller
         $item = Barang::where('kd_brg', $id)->first();
         $data = array(
             'user' => Session::get('user'),
-            'id' => $item->kd_brg,
+            'id' => $id,
             'kd_brg' => $item->kd_brg,
             'nm_brg' => $item->nm_brg,
             'hrg_beli' => $item->hrg_beli,
@@ -178,18 +178,38 @@ class ItemController extends Controller
         return $pdf->stream('cetak-barcode.pdf');
     }
 
-    public function print_all_barcode(Request $request)
+    public function send_barcode(Request $request)
     {
-        $datas = [];
-        $codes = $request->query('item_codes');
-        foreach ($codes as $key => $value) {
-           array_push($datas, $value);
-        }
+        $codes = $request->input('item_codes');
+        $data = array(
+            'codes' => $codes,
+            'success'=> true
+        );
 
-        $pdf = PDF::loadView('pdf.generate_all_barcode', $datas);
-
-        return $pdf->stream('cetak-barcode.pdf');
+        return response()->json($data);
+        
     }
 
-    
+    public function preview_barcode($codes)
+    {
+
+        $stringArray = $codes;
+        $rows = explode(',', $stringArray);
+        $result = [];
+
+        if(is_array($rows) || is_object($rows)){
+            foreach ($rows as $value) {
+                $result[] = $value;
+            }
+
+        }
+        $data = array(
+            'codes' => $result
+        );
+       
+        $pdf = PDF::loadView('pdf.generate_all_barcode', $data)->setOption('A8', 'potrait');
+
+        return $pdf->stream('cetak-barcode.pdf');
+        // return view('pdf.generate_all_barcode', $data);
+    }
 }

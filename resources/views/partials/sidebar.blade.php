@@ -45,7 +45,8 @@
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fas fa-chart-line me-2"></i>Laporan<i class="fas fa-angle-down float-end mt-2"></i></a>
                         <div class="dropdown-menu bg-transparent border-0">
                         <a href="{{ route('report.items') }}" target="_blank" class="nav-item nav-link"><i class="far fa-chart-bar"></i> Master Barang</a>
-                        <a href="{{ route('report.sales') }}" class="nav-item nav-link"><i class="far fa-chart-bar"></i> Transaksi Penjualan</a>
+                        <a href="{{ route('report.sales_per_today') }}" class="nav-item nav-link"><i class="far fa-chart-bar"></i> Penjualan per hari</a>
+                        <a href="{{ route('report.sales_per_week_or_month') }}" class="nav-item nav-link"><i class="far fa-chart-bar"></i> Penjualan mingguan / bulanan</a>
                         </div>
                     </div>
                     

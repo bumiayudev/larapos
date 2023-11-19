@@ -315,7 +315,7 @@
             
         });
         
-        console.log(dataTable);
+        // console.log(dataTable);
         if((convertToAngka($('#txtDibayar').val()) < convertToAngka($('#txtTotal').val())) || $('#txtDibayar').val() == ""){
             alert('Nominal pembayaran masih kurang dari nominal belanja');
         } else {
@@ -338,9 +338,11 @@
                         if(res.success == true){
                             alert(res.message)
                             setTimeout(() => {
+                                
+                                location.href = "{{ URL::to('/sales/print_receipt') }}/"+faktur+"";
                                 resetCart();
-                            }, 4000);
-                            location.href = "{{ URL::to('/sales/print_receipt') }}/"+faktur+"";
+
+                            }, 2000);
                             
                         }
         

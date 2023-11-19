@@ -15,6 +15,7 @@ use App\Models\Petugas;
 use Carbon\Carbon;
 use PDF;
 
+
 class SaleController extends Controller
 {
     protected $url;
@@ -213,5 +214,24 @@ class SaleController extends Controller
         );
 
         return response()->json($data, 200);
+    }
+
+    function show_list_sales()
+    {
+        $data = array(
+            'user' => Session::get('user')
+        );
+
+        return view('pages.sales.list')->with($data);
+    }
+
+    function json_sales()
+    {
+        $rows = DB::table('penjualan')
+                ->join('petugas', 'penjualan.kd_ptg', '=', 'petugas.kd_ptg')
+                ->select('penjualan.*', 'petugas.nm_ptg')
+                ->get();
+
+        return DataTables::of($rows)->toJson();
     }
 }

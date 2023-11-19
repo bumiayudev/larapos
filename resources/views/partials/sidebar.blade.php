@@ -38,7 +38,7 @@
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fas fa-store me-2"></i>Transaksi<i class="fas fa-angle-down float-end mt-2"></i></a>
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="{{ route('sales') }}" class="nav-item nav-link"><i class="fas fa-shopping-basket"></i> Penjualan</a>
-                            <a href="{{ route('home') }}" class="nav-item nav-link"><i class="fas fa-list"></i> Daftar Transaksi</a>
+                            <a href="{{ route('sales.list') }}" class="nav-item nav-link"><i class="fas fa-list"></i> Daftar Penjualan</a>
                         </div>
                     </div>
                     <div class="nav-item dropdown">

@@ -21,3 +21,4 @@ use App\Http\Controllers\SaleController;
 // });
 Route::post('/items', [ApiController::class, 'search_item'])->name('api.search_item');
 Route::post('/sales/store_cart', [SaleController::class, 'store_cart']);
+Route::get('/sales/json', [SaleController::class, 'json_sales']);

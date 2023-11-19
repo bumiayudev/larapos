@@ -44,6 +44,7 @@ Route::middleware(['auth.user'])->group(function () {
     Route::get('/sales/delete_cart/{id}', [SaleController::class, 'delete_cart']);
     Route::get('/sales/reset_cart', [SaleController::class, 'reset_cart'])->name('sales.reset_cart');
     Route::get('/sales/delete_cart', [SaleController::class, 'destroy_cart'])->name('sales.delete_cart');
+    Route::get('sales/list', [SaleController::class, 'show_list_sales'])->name('sales.list');
     Route::get('/sales/print_receipt/{faktur}', [SaleController::class, 'print_receipt']);
     Route::get('/report/items', [ReportController::class, 'items'])->name('report.items');
     Route::get('/report/sales/per_today', [ReportController::class, 'sales_per_today'])->name('report.sales_per_today');

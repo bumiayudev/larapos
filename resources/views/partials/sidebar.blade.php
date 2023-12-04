@@ -27,13 +27,15 @@
                 </div>
                 <div class="navbar-nav w-100">
                     <a href="{{ url('/') }}" class="nav-item nav-link active"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-server me-2"></i>File<i class="fas fa-angle-down float-end mt-2"></i></a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="{{ route('users') }}" class="dropdown-item"><i class="fas fa-user"></i> Pengguna</a>
-                            <a href="{{ route('items') }}" class="dropdown-item"><i class="fas fa-cubes"></i> Barang</a>
+                    @if ($user['status'] == 'Admin')
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-server me-2"></i>File<i class="fas fa-angle-down float-end mt-2"></i></a>
+                            <div class="dropdown-menu bg-transparent border-0">
+                                <a href="{{ route('users') }}" class="dropdown-item"><i class="fas fa-user"></i> Pengguna</a>
+                                <a href="{{ route('items') }}" class="dropdown-item"><i class="fas fa-cubes"></i> Barang</a>
+                            </div>
                         </div>
-                    </div>
+                    @endif
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fas fa-store me-2"></i>Transaksi<i class="fas fa-angle-down float-end mt-2"></i></a>
                         <div class="dropdown-menu bg-transparent border-0">

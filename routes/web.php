@@ -55,7 +55,7 @@ Route::middleware(['auth.user', 'role.permission'])->group(function () {
     Route::get('/items/print_barcode/{id}', [ItemController::class, 'print_barcode']);
     Route::post('/items/send_barcode', [ItemController::class, 'send_barcode']);
     Route::get('/items/preview_barcode/{codes?}', [ItemController::class, 'preview_barcode'])->name('items.preview_barcode');
-    
+    Route::get('/sales/return/{id}', [SaleController::class, 'return'])->name('sales.return');
 });
 
 Route::get('/access_denied', function(){

@@ -234,4 +234,20 @@ class SaleController extends Controller
 
         return DataTables::of($rows)->toJson();
     }
+
+    function return($id)
+    {
+        $sale = Penjualan::where('faktur', $id)->first();
+        $details = DetailJual::where('faktur', $id)->get();
+
+        $data = array(
+            'sale' => $sale,
+            'tgl' => date('d-m-Y'),
+            'jam' => date('H:i'),
+            'user' => Session::get('user'),
+            'cart' => $details
+        );
+
+        return view('pages.sales.return', $data);
+    }
 }

@@ -68,7 +68,7 @@
                             if(role == 'Admin'){
                                 action = `
                                 <a href="{{ URL::to('/sales/print_receipt') }}/${row.faktur}" class="btn btn-sm btn-outline-primary" target="_blank"><i class="fas fa-print"></i></a> |
-                                <a href='#' class="btn btn-sm btn-outline-warning"><i class="fas fa-edit"></i></a>
+                                <a href="{{ URL::to('/sales/return') }}/${row.faktur}" class="btn btn-sm btn-outline-warning"><i class="fas fa-edit"></i></a>
                                 `;
 
                             } else{

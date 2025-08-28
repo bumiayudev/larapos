@@ -81,6 +81,29 @@ class ReportController extends Controller
     }
 
 
+    public function print_per_today(Request $request)
+    {
+        $today = strtotime($request->day);
+        $rows = Penjualan::where('tanggal', date('Y-m-d', $today))->get();
+        $jmlItem = Penjualan::where('tanggal', date('Y-m-d', $today))->sum('item');
+        $jmlJual = Penjualan::where('tanggal', date('Y-m-d', $today))->sum('total');
+        $jmlDibayar = Penjualan::where('tanggal', date('Y-m-d', $today))->sum('dibayar');
+        $jmlKembali = Penjualan::where('tanggal', date('Y-m-d', $today))->sum('kembali');
+
+        $data = array(
+            'user'=> Session::get('user'),
+            'rows' =>  $rows,
+            'today' => date('d-m-Y', $today),
+            'jmlItem'=> $jmlItem,
+            'jmlJual'=>$jmlJual,
+            'jmlDibayar'=>  $jmlDibayar,
+            'jmlKembali'=> $jmlKembali
+        );
+
+        $pdf = PDF::loadView('print.report.per_today', $data);
+        return $pdf->stream('cetak-laporan-penjulan-perhari.pdf');
+    }
+
     public function per_week_or_month(Request $request)
     {
        
@@ -116,5 +139,29 @@ class ReportController extends Controller
 
         // dd($data);
         return view('pages.report.sales_per_week_or_month')->with($data);
+    }
+
+    public function print_per_week_or_month(Request $request)
+    {
+        $startDate = strtotime($request->startDate);
+        $endDate = strtotime($request->endDate);
+
+        $rows  = Penjualan::whereBetween('tanggal', array(date('Y-m-d', $startDate), date('Y-m-d', $endDate)))->get();
+        $jmlItem = Penjualan::whereBetween('tanggal', array(date('Y-m-d', $startDate), date('Y-m-d', $endDate)))->sum('item');
+        $jmlJual = Penjualan::whereBetween('tanggal', array(date('Y-m-d', $startDate), date('Y-m-d', $endDate)))->sum('total');
+        $jmlDibayar = Penjualan::whereBetween('tanggal', array(date('Y-m-d', $startDate), date('Y-m-d', $endDate)))->sum('dibayar');
+        $jmlKembali = Penjualan::whereBetween('tanggal', array(date('Y-m-d', $startDate), date('Y-m-d', $endDate)))->sum('kembali');
+
+        $data = array(
+            'user'=> Session::get('user'),
+            'rows' => $rows,
+            'jmlItem'=> $jmlItem,
+            'jmlJual'=> $jmlJual,
+            'jmlDibayar'=> $jmlDibayar,
+            'jmlKembali'=> $jmlKembali
+        );
+
+        $pdf = PDF::loadView('print.report.per_week_or_month', $data);
+        return $pdf->stream('cetak-laporan-penjulan-permingguan-perbulan.pdf');
     }
 }

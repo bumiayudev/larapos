@@ -10,15 +10,16 @@
                         <label for="">Laporan Mingguan atau Bulanan</label>
                         <form action="{{ route('report.sale_per_week_or_month') }}" method="POST">
                             @csrf
-                            <input type="text"  id="startDate" class="rounded" name="inputStartDate" autocomplete="off">
-                            <input type="text"  id="endDate" class="rounded" name="inputEndDate" autocomplete="off">
+                            <input type="text"  id="startDate" class="rounded" name="inputStartDate" autocomplete="off" required>
+                            <input type="text"  id="endDate" class="rounded" name="inputEndDate" autocomplete="off" required>
                             @error('inputStartDate')
                               <br><small class="text-danger mb-2">{{ $message }}!</small>
                             @enderror
                             @error('inputEndDate')
                             <br><small class="text-danger">{{ $message }}!</small>
                             @enderror
-                            <br><button class="btn btn-sm btn-outline-dark rounded mt-2">Tampilkan</button>
+                            <br><button class="btn btn-sm btn-outline-dark rounded mt-2" id="btnShow">Tampilkan</button>
+                            <a href="#" role="button" target="_blank" class="btn btn-sm btn-outline-dark mt-2" id="btnPrint">Cetak</a>
                         </form>
                     </div>
                 </div>
@@ -64,12 +65,27 @@
         <script>
            $(function(){
             $('#startDate').datepicker({
-                dateFormat: "dd-mm-yy"
+                dateFormat: "dd-mm-yy",
+                showOn: "focus"
             });
             $('#endDate').datepicker({
-                dateFormat: "dd-mm-yy"
+                dateFormat: "dd-mm-yy",
+                showOn: "focus"
             });
-           })
+            $(document).on('change', '#startDate', function(){
+                let startDate = $(this).val();
+                let endDate = $('#endDate').val();
+                $('#btnPrint').attr('data-startdate', startDate);
+                $('#btnPrint').attr('href', "{{ url('/print/report/sales_per_week_or_month') }}?startDate="+startDate+"&&endDate="+endDate+"");
+            });
+            $(document).on('change', '#endDate', function(){
+                let startDate = $('#startDate').val();
+                let endDate = $(this).val();
+                $('#btnPrint').attr('data-enddate', endDate);
+                $('#btnPrint').attr('href', "{{ url('/print/report/sales_per_week_or_month') }}?startDate="+startDate+"&&endDate="+endDate+"");
+            });
+            
+           });
         </script>
     @endpush
 @endsection

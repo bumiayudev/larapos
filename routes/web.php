@@ -34,7 +34,9 @@ Route::middleware(['auth.user'])->group(function() {
     Route::get('/report/sales/per_today', [ReportController::class, 'sales_per_today'])->name('report.sales_per_today');
     Route::get('/report/sales/per_week_or_month', [ReportController::class, 'sales_per_week_or_month'])->name('report.sales_per_week_or_month');
     Route::post('/report/sales/per_today', [ReportController::class, 'per_today'])->name('report.sale_per_today');
+    Route::get('/print/report/sales_per_today', [ReportController::class, 'print_per_today']);
     Route::post('/report/sales/per_week_or_month', [ReportController::class, 'per_week_or_month'])->name('report.sale_per_week_or_month');
+    Route::get('/print/report/sales_per_week_or_month', [ReportController::class, 'print_per_week_or_month']);
 
 });
 Route::middleware(['auth.user', 'role.permission'])->group(function () {

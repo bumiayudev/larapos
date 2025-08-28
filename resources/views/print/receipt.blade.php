@@ -39,9 +39,9 @@
 </head>
 <body>
     <div class="shopHeader">
-        <h4>Rafa Store</h4>
-        <p>Jl.Raya Bekasi KM 111 no.45</p>
-        <p>No.Kontak : 087884395611</p>
+        <h4>GS Coffee Shop</h4>
+        <p>Jl. Graha Prima Raya Bekasi, RT.10/RW.16, Tambun.</p>
+        <p>No.Kontak : 081233334444</p>
     </div>
     <div class="divider"></div>
     <div id="tbHeader">

@@ -48,7 +48,7 @@
                                 <input type="text" id="txtItem" placeholder="Contoh : B001" class="txt-search" autocomplete="off">
                                 <input type="text" id="qty" name="qty" class="qty-item" value="1">
                                 <input type="hidden" id="kdBrg" name="kdBrg">
-                                <button type="submit" id="btnAddSale" class="button-prepend-add"><i class="fas fa-plus"></i>Tambah</button>
+                                <button type="submit" id="btnAddSale" class="button-prepend-add mt-2"><i class="fas fa-plus"></i>Tambah</button>
                             </div>
                             </form>
                         </div>
